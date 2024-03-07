@@ -3,7 +3,8 @@ const player1Name = document.querySelector('#player1-name');
 const player2Name = document.querySelector('#player2-name');
 
 //Start/Restart btns
-const startBtn = document.querySelector('.start');
+const start = document.querySelector('.start');
+const restart = document.querySelector('.restart');
 
 //Cells
 const cells = document.querySelectorAll('.cell');
@@ -18,15 +19,20 @@ function player(name, marker) {
   return { name, marker }
 }
 
+//Flag to determine the player1 is playing or not
+let isPlayer1Turn = true;
+
+//Number of empty cells total
+let emptyCells = 9;
+
 function startGame() {
   //Create the players objects
   const player1 = player(player1Name.value, 'X');
   const player2 = player(player2Name.value, 'O');
   players.push(player1, player2);
 
-  //Players playing on the board, taking each turn
-  let isPlayer1Turn = true;
 
+  //Players playing on the board, taking each turn
   cells.forEach(cell => {
     cell.addEventListener('click', () => {
       if (isPlayer1Turn) {
@@ -43,17 +49,24 @@ function startGame() {
         //Check the winner after every mark
         checkWin(player2.name, player2.marker);
       }
+
+      //Decrese the number of empty cells after every mark
+      emptyCells--;
+
+      checkTie();
       //console.log('cell clicked');
     })
   })
+
+  checkTie();
   //console.log(players);
 }
 
-startBtn.addEventListener('click', startGame);
+start.addEventListener('click', startGame);
+restart.addEventListener('click', restartGame);
 
 //Check the winner
 function checkWin(playerName, marker) {
-  //Winning combinations
   const winCombos = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
     [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
@@ -70,4 +83,22 @@ function checkWin(playerName, marker) {
       result.textContent = `${playerName} won!`;
     }
   }
+}
+
+//Check the tie
+function checkTie() {
+  if(emptyCells === 0) {
+    result.textContent = "It's a tie";
+  }
+}
+
+//Restart the game
+function restartGame() {
+  cells.forEach(cell => {
+    cell.textContent = '';
+  })
+
+  emptyCells = 9;
+  isPlayer1Turn = true;
+  result.textContent = '';
 }
