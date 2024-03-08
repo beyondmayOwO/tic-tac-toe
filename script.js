@@ -12,6 +12,11 @@ const cells = document.querySelectorAll('.cell');
 //Result section
 const result = document.querySelector('.result');
 
+//Dialog
+const dialog = document.querySelector('dialog');
+const closeDialog = document.querySelector('.close-dialog');
+const welcomeText = document.querySelector('.welcome-text');
+
 const players = []
 
 //player factory
@@ -62,7 +67,15 @@ function startGame() {
   //console.log(players);
 }
 
-start.addEventListener('click', startGame);
+start.addEventListener('click', () => {
+  dialog.showModal();
+  startGame();
+});
+
+closeDialog.addEventListener('click', () => {
+  dialog.close();
+})
+
 restart.addEventListener('click', restartGame);
 
 //Check the winner
