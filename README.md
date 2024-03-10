@@ -14,3 +14,11 @@ This is a tic-tac-toe game where two players can play on the board.
 - You can now start marking on the board
 - Mark on the board until the result text pop ups
 - Click on 'Restart' to restart the game
+
+## What I learned
+
+
+- Using factory functions instead of object constructors
+
+- Wrapping the factory inside an IIFE (module pattern)
+  For example, I put the codes inside the 'Game' module, making it little to no global code.
