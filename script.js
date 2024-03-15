@@ -47,7 +47,7 @@ const Game = (() => {
 
   //Check the tie
   function checkTie() {
-    if(emptyCells === 0) {
+    if(emptyCells === 0 && result.textContent === '') {
       result.textContent = "It's a tie";
     }
   }
