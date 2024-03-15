@@ -64,29 +64,31 @@ const Game = (() => {
     const player2 = player(player2Name.value, 'O');
     players.push(player1, player2);
 
-
-    //Players playing on the board, taking each turn
     cells.forEach(cell => {
       cell.addEventListener('click', () => {
-        if (isPlayer1Turn) {
-          cell.textContent = player1.marker;
-          isPlayer1Turn = false;
 
-          //Check the winner after every mark
-          checkWin(player1.name, player1.marker);
+        //Players can only mark if the cell is empty as well as the result is empty
+        if(cell.textContent === '' && result.textContent === '') {
+          if (isPlayer1Turn) {
+            cell.textContent = player1.marker;
+            isPlayer1Turn = false;
+
+            //Check the winner after every mark
+            checkWin(player1.name, player1.marker);
+          }
+          else {
+            cell.textContent = player2.marker;
+            isPlayer1Turn = true;
+
+            //Check the winner after every mark
+            checkWin(player2.name, player2.marker);
+          }
+
+          //Decrese the number of empty cells after every mark
+          emptyCells--;
+
+          checkTie();
         }
-        else {
-          cell.textContent = player2.marker;
-          isPlayer1Turn = true;
-
-          //Check the winner after every mark
-          checkWin(player2.name, player2.marker);
-        }
-
-        //Decrese the number of empty cells after every mark
-        emptyCells--;
-
-        checkTie();
       })
     })
   }
